@@ -6,9 +6,13 @@ In this assignment, you will work with data from [Count Love](https://countlove.
 Through this assignment, you will be able to answer questions about protests, including:
 
 * What were the most attended and least attended protests in the US in the last 5 years?
+
 * How many protests occurred in Washington state?
+
 * How did the number of protests in 2019 compare to 2020, and why?
+
 * Why are people protesting in the US? What are the biggest motivators?
+
 
 ## Learning objectives
 By completing the assignment, you will develop or skills for:
@@ -85,21 +89,65 @@ In the second chapter of *Data Feminism*, Klein and D'Ignazio describe 4 ways th
 
 ### Critical Analysis & Reflection: Before You Code (questions above)
 
-* **(R1a)** ... (about 25-50 words)
-* **(R1b)** ... (about 25-50 words)
-* **(R1c)** ... (about 25-50 words)
-* **(R1d)** ... (about 25-50 words)
-* **(R1e)** ... (about 25-50 words)
-* **(R1f)** ... (about 25-50 words)
-* **(R1g)** ... (bullet points fine; about 50 words)
-* **(R1h)** ... (bullet points fine; about 50 words)
+* **(R1a)** The creators of this data, Tommy Leung and Nathan Perkins started collecting the CountLove data because they wanted to create a factual record of ongoing demonstrations and protests across the US to make that type of data/info more accessible to citizens, politicians, and journalists. Keeping track of the number of protests can be difficult, and creating a reliable repository of that information can be incredibly helpful in fact-checking and communicating the scale of the issue to elected officials. 
+
+* **(R1b)** The main argument of this article was to convey just how influential and impactful the Black Lives Matter movement was across the nation, through a large collection of images from protests in every single state and major city. They wanted to share the truth about the movement and how it mobilized Americans in the smallest corners of the country, despite what right-wing media may say about it only happening in bigger, liberal cities.
+
+* **(R1c)** The creators of Countlove are Tommy Leung and Nathan Perkins, both engineers and scientists who met at MIT while working on their Masters in Technology and Policy, who were both interested in civic responsibility and public policy. They started CountLove in wake of the 2016 election and developed it through 2021.
+
+* **(R1d)** The types of demonstrations that CountLove includes in their data are public displays of protest that are not part of a business or events put on by companies or elected officials/campaigns. The creators only wanted to count true public protests that represent a community coming together with the only motive being outrage/mobility for a cause.
+
+* **(R1e)** CountLove gets their data from local newspapers and television sites on a daily basis. They do things called "crawling" which is a sort of process of extracting data, as well as a software stack.
+
+* **(R1f)** CountLove makes their estimates about the number of people by interpreting certain count words as their literal estimate, such as dozen as 10, dozens as 20, and hundreds at 100. This is a potential problem and contributes to less accuracy of the data as different sources may interpret and use these count words different than others. It can also be an estimate that is too low, which is an obstruction of truth. They also mark attendances as zero when there is not mention of the a number, while still acknowledging the protest. This is even more of a loss of data.
+
+* **(R1g)** Two central values of CountLove are transparency, with their main purpose being to provide an accurate and ongoing count of protests/demonstrations across the country. The second value is empathy, as the use of this data is meant to make more compelling cases that Americans are fighting for what they believe in and are a much more diverse, empathetic, and connected country than what the media/bad news may often portray it as.
+
+* **(R1h)** One direct stakeholder in the CountLove data are the users of the data; this could be citizens, journalists, or politicians, just anyone who uses the CountLove data for a certain purpose or motive with the data. The indirect stakeholders would be those who were in the protests or news sites reporting on the protests with no knowledge of their presence/reporting creating the CountLove data. They may not be using the data but are indirect stakeholders of the data are being affected by it as they are the ones making those numbers happen.
 
 ### Part 3: Locations (`analysis.R`)
-* **(R3a)** ... (about 25-50 words)
-* **(R3b)** ... (about 25-50 words)
-* **(R3c)** ... (about 25-50 words)
+* **(R3a)** The number of protests in WA does not surprise me that much.
+            The majority of those protests occurred in Seattle, 
+            a city that is average sized, but still does not match  
+            up to the scale of states who experience protests all 
+            over, not just in one city. WA’s proportion of protests 
+            is about 8%.
+            
+* **(R3b)** I do think this is an amazing feature, and one of the
+            greatest parts about R functions. They make analyzing
+            and summarizing data incredibly efficient.
+            
+* **(R3c)** The biggest data quality issue that I notice
+            is the lack of context about what the values in
+            the table summary mean, such as frequency.
+            Frequency does not always mean counts, making
+            it confusing for readers. This data would 
+            make more sense displayed as a histogram.
 
 ### Critical Analysis & Reflection: After You Code (questions above)
-* **(R7h)** ... (100 words or more)
-* **(R7i)** ... (50 words or more)
-* **(R7j)** ... (50 words or more)
+* **(R7h)** I think that the The CountLove data embodies the forms
+            of Count and Analyze the best to challenge the power
+            of the hierarchy/systemic issues that lead to people
+            protesting in the first place. They are taking responsibility
+            and authority to collect accurate data about our country's 
+            oldest right; assembly. Not only is the data they are collecting
+            specific, organized, and informative, but almost self-analytic. 
+            The answers are in the numbers. They show how our country can come 
+            together to fight for what we believe in more often (and on a
+            larger scale) than people may think, all through algorithms 
+            and data science. 
+            
+* **(R7i)** The most interesting thing that I learned from this analysis
+            was the massive variation in the purposes and motivations 
+            of these protests. Many may use CountLove or see it as more useful
+            for specifically the BLM Movement, like the NYT, but there is so
+            much more than that. From healthcare to the environment, it is
+            so cool to see the different purposes Americans use their right
+            to assembly for.
+            
+* **(R7j)** I would love to do more visualizations with this data, such 
+            as making more complex graphs like histograms and bar charts.
+            I think visual references are great tools at truly showing
+            the impact of data and probably part of the reason that
+            CountLove's maing way to display their data was on a giant
+            map of the US. 

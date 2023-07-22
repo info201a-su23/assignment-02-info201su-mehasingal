@@ -5,7 +5,7 @@
 #    dhendry@uw.edu
 
 # Practice set info ---- 
-practice.begin("A2", learner="[your name]", email="[your e-mail]")
+practice.begin("A2", learner="Meha Singal", email="msinga@uw.edu")
 
 # Your 44 prompts ----
 
@@ -126,6 +126,9 @@ practice.begin("A2", learner="[your name]", email="[your e-mail]")
 #                                         Note 03.
 # 1a: Load the `stringr` package, which you will use later.
 
+install.packages("stringr")
+library(stringr)
+
 # 1b: Load the data from https://countlove.org/data/data.csv (Variable: `protests`)
 
 #                                         Note 04.
@@ -134,10 +137,16 @@ practice.begin("A2", learner="[your name]", email="[your e-mail]")
 #        2. Are there missing values (NA, which means "Not Available.") or odd values? 
 #        3. What are the column names (sometimes called variables or features)?
 
+protests <- read.csv("protests.csv")
+
 # 1c: Use an R function to determine how many protests are in the dataset? (Variable: `num_protests`)
+
+num_protests <- nrow(protests)
 
 # 1d: Use an R function to determine how many how many values (also known as
 #    attributes or features) have been recorded for each protest (Variable: `num_features`)
+
+num_features <- ncol(protests)
 
 #                                         Note 05.
 ## Part 2: Attendees ----
@@ -146,19 +155,31 @@ practice.begin("A2", learner="[your name]", email="[your e-mail]")
 
 # 2a: Extract the `Attendees` column into a variable called `num_attendees`. (Variable: `num_attendees`)
 
+num_attendees <- (protests$Attendees)
+
 #                                         Note 06.
 #     For the following prompts, you will need to consider missing values. In R,
 #     missing values are denoted by the symbol NA, which means "Not Available."
 
 # 2b: What is the lowest number of attendees? (Variable: `min_attendees`)
 
+min_attendees <- min(num_attendees, na.rm = TRUE)
+
 # 2c: What is the highest number of attendees? (Variable: `max_attendees`)
+
+max_attendees <- max(num_attendees, na.rm = TRUE)
 
 # 2d: What is the mean number of attendees? (Variable: `mean_attendees`)
 
+mean_attendees <- mean(num_attendees, na.rm = TRUE)
+
 # 2e: What is the median number of attendees? (Variable: `median_attendees`)
 
+median_attendees <- median(num_attendees, na.rm = TRUE)
+
 # 2f: What is the difference between the mean and median number of attendees? (Variable: `mean_median_diff`)
+
+median_diff <- mean_attendees - median_attendees
 
 #                                         Note 07.
 #     *Consideration* What does the difference between the mean and the median
@@ -170,9 +191,15 @@ practice.begin("A2", learner="[your name]", email="[your e-mail]")
 #    variable called `attendees_distribution`. (Note: Later in the course, we
 #    will use more refined plotting methods.) (Variable: `attendees_distribution`)
 
+attendees_distribution <- boxplot(num_attendees, main = "Distribution of Attendees", ylab = "Number of Attendees")
+
+  
 # 2h: Create another boxplot of the *log* of the number of attendees.
 #    Store the plot in a variable `log_attendees_distribution`. (Note: You will
 #    likely see see a warning in the console, which is expected.) (Variable: `log_attendess_distribution`)
+
+logged_attendees <- log(num_attendees)
+log_attendess_distribution <- boxplot(logged_attendees, main = "Log Distribution of Attendees", ylab = "Number of Attendees")
 
 #                                         Note 08.
 ## Part 3: Locations -----
@@ -180,13 +207,22 @@ practice.begin("A2", learner="[your name]", email="[your e-mail]")
 
 # 3a: Extract the `Location` column. (Variable: `locations`)
 
+locations <- protests$Location
+
 # 3b: How many *unique* locations are in the dataset? (Variable: `num_locations`)
+
+num_locations <- length(unique(locations))
 
 # 3c: How many protests occurred in Washington State (WA)? (Hint: Use a function, 
 #    called str_detect(), from the stringr package (see https://stringr.tidyverse.org/), 
 #    to detect the presence (or absence) of WA".) (Variable: `num_in_wa`)
 
+upper_locations <- toupper(locations)
+num_in_wa <- sum(str_detect(upper_locations, "WA"))
+
 # 3d: What proportion of protests occurred in Washington? (Variable: `prop_in_wa`)
+
+prop_in_wa <- num_in_wa / num_protests
 
 #                                         Note 09.
 #     *R3a: REFLECTION:* Does the number of protests in Washington surprise you?
@@ -210,24 +246,50 @@ practice.begin("A2", learner="[your name]", email="[your e-mail]")
 #       2. You should count the number of locations that *match* the `location'
 #          parameter. For example, `Seattle` should be a match for "Seattle, WA". (Variable: `count_in_location`)
 
+count_in_location <- function(location) {
+  
+  matches <- str_detect(locations, location)
+  
+  counts <- sum(matches)
+  
+  if (counts == 0) {
+    return(paste("Location (", location, ") not found."))
+  }
+  
+  return(paste("There were", counts, "protests in", location, "."))
+  
+}
+  
 # 3f: Use your function above to compute the number of protests in "Washington, DC". (Variable: `dc_summary`)
+
+dc_summary <- count_in_location("Washington, DC")
 
 # 3g: Use your function above to compute the number of protests in "Minneapolis". (Variable: `minneapolis_summary`)
 
+minneapolis_summary <- count_in_location("Minneapolis")
+
 # 3h: Use your function above to demonstrate that it works correctly for a
 #    location that is not in the data set. (Variable: `missing_summary`)
+
+missing_summary <- count_in_location("Australia")
 
 # 3i: Create a new vector `states` that holds the state locations, that is, the
 #    last two characters of each value in the `locations` vector. (Hint: You may
 #    want to again use a function from the `stringr` package 
 #    Check, for example, the `str_sub()` function.) (Variable: `states`)
 
+states <- str_sub(upper_locations,-2,-1)
+
 # 3j: Create a vector of the unique states in your dataset. (Variable: `uniq_states`)
+
+uniq_states <- unique(states)
 
 # 3k: Create a summary sentence for each state by passing your `uniq_states`
 #    variable and `count_in_location` variables to the `sapply()` function.
 #    (Hint: Study section 8.3 in the textbook. It is important to understand
 #    the `sapply()` and `lapply()` functions.) (Variable: `state_summary`)
+
+state_summary <- sapply(uniq_states, count_in_location)
 
 #                                         Note 10.
 #     *R3b: REFLECTION:* You have applied your function to an entire vector 
@@ -235,6 +297,10 @@ practice.begin("A2", learner="[your name]", email="[your e-mail]")
 
 # 3l: Create a summary table by passing your `states` variable to the
 #    `table()` function and by storing the result in the variable `state_table`.
+
+state_table <- table(states)
+View(state_table)
+
 #   
 #    *SUGGESTION:* Use the View() function to more easily examine the table. (Variable: `state_table`)
 
@@ -246,6 +312,8 @@ practice.begin("A2", learner="[your name]", email="[your e-mail]")
 # 3m: What was the maximum number of protests in a state? (Hint: Use the
 #    `state_table` variable.) (Variable: `max_in_state`)
 
+max_in_state <- max(state_table)
+
 #                                         Note 12.
 ## Part 4: Dates ----
 # In this part, you will exploring *when* protests happened.
@@ -255,16 +323,29 @@ practice.begin("A2", learner="[your name]", email="[your e-mail]")
 #    process the values as dates, which are *fortunately* already in an optimal
 #    format for parsing.) (Variable: `dates`)
 
+dates <- as.Date(protests$Date)
+
 # 4b: What is the most recent date in the dataset? (Variable: `most_recent`)
 
+most_recent <- max(dates)
+
 # 4c: What is the earliest date in the dataset? (Variable: `earliest`)
+
+earliest <- min(dates)
 
 # 4d: What is the length of the time span of the dataset? (Hint: R can do math with
 #    dates pretty well by default!) (Variable: `time_span`)
 
+time_span <- most_recent - earliest
+print(time_span)
+
 # 4e: Create a vector of the dates that are in 2020. (Variable: `in_2020`)
 
+in_2020 <- dates[str_detect(dates, "2020")]
+
 # 4f: Create a vector of the dates that are in 2019. (Variable: `in_2019`)
+
+in_2019 <- dates[str_detect(dates, "2019")]
 
 # 4g: What is the ratio of the number of protests in 2020 compared to 2019? (Variable: `ratio_2020_2019`)
 
@@ -278,11 +359,28 @@ practice.begin("A2", learner="[your name]", email="[your e-mail]")
 #           N is the number of protests on that date; and
 #           DATE is the date provided. (Variable: `count_on_date`)
 
+
+count_on_date <- function(date) {
+  
+  on_date <- as.Date(date)
+  
+  counts <- str_detect(dates, date)
+  
+  num_of_counts <- sum(counts)
+  
+  return(paste("There were", num_of_counts, "protests on", date))
+  
+}
+
 # 4i: Using your function you just wrote, how many protests were there on
 #    May 24th, 2020? (Variable: `num_on_may_24`)
 
+count_on_date("2020-04-24")
+
 # 4j: Using your function you just wrote, how many protests were there on
 #    May 31th, 2020? (Variable: `num_on_may_31`)
+
+count_on_date("2020-05-31")
 
 # 4k: How many protests occurred each month in 2020? (Hint: Use the `months()`
 #    function, your `in_2020` dates, and the `table()` function. If you like, you
@@ -298,12 +396,18 @@ practice.begin("A2", learner="[your name]", email="[your e-mail]")
 # In this section, you will explore *why* the protests happened. That is, 
 # our goal is to understand the purposes of the protests.
 
+
 # 5a: Extract the `Event..legacy..see.tags.` column into a variable called `purpose`.
+
+purpose <- protests$Event..legacy..see.tags.
+
 #    
 #    *CONSIDER:* The name of this column, "Event..legacy..see.tags.", is very odd. Why? 
 #    What can be learned from this column name? (Variable: `purpose`)
 
 # 5b: How many different purposes are listed in the dataset? (Variable: `num_purposes`)
+
+num_purposes <- length(unique(purpose))
 
 # 5c: That's quite a few! Why are there so many purposes? Type `print(purpose)` to
 #    examine the values in the vector. You will notice a common pattern. Here, for
@@ -314,6 +418,7 @@ practice.begin("A2", learner="[your name]", email="[your e-mail]")
 #         [4] "Other (Martin Luther King Jr.)"         
 #         [5] "Healthcare (Pro-Planned Parenthood)" 
 #         [6] "Executive"
+
 #    
 #    What is the common pattern? In short, the value of each vector element is one of 
 #    two possible patterns: 
@@ -348,11 +453,28 @@ practice.begin("A2", learner="[your name]", email="[your e-mail]")
 #    to regular expressions and R. Take your time. You will likely need to do some
 #    thoughtful trial and error. (Variable: `get_purposes`)
 
+
+get_purposes <- function() {
+  
+  high_level <- str_replace(purpose, "\\s+\\(.*\\)", "")
+  
+  return(high_level)
+  
+}
+
 # 5d: Show that your function, `get_purposes()` works. (Variable: `high_level_purpose`)
+
+get_purposes()
 
 # 5e: How many "high level" purposes have you identified? (Variable: `num_high_level`)
 
+num_high_level <- length(unique(get_purposes()))
+
 # 5f: Use the table() function to count the number of protests for each high level purpose. (Variable: `high_level_table`)
+
+high_level_table <- table(get_purposes())
+View(high_level_table)
+
 
 #                                         Note 15.
 #     *CONSIDER:* Use View() to examine your `high_level_table` variable. What
@@ -461,17 +583,75 @@ format_doc <- function(protest_df, purpose, position_taken=NULL) {
 
 # A helper function to write the report to a file
 # NOTE: Check and update the filename for your machine
-write_report <- function(md_doc, fname="~/Documents/info201/reports/report.md") {
+write_report <- function(md_doc, fname="/Users/meha/Desktop/INFO/info201/code/assignment-02-mehasingal") {
   output_fn <- file(fname, "w")
   writeLines(md_doc, output_fn)
   close(output_fn)
 }
 
+# FUNCTION 1: filter_positions()
+# filter_positions() takes two arguments: 
+#     purpose             A string for the purpose of the protest (e.g., "Environment")
+#     position_taken      A string for the position taken (e.g., "Against noise")
+#                         The default value should be NULL 
+#                            
+# filter_positions() should return a dataframe of the protests that match on `purpose` 
+# and `position_taken`. If `position_taken` is NULL then all protests that 
+# match the `purpose` should be returned.
+
+
 # 6a: Write the filter_positions() function, as described above. Please comment 
 #    your function. (Variable: `filter_protests`)
 
+filter_protests <- function(purpose, position_taken=NULL) {
+  
+  if (is.null(position_taken)) {
+      filtered_protests <- subset(protests, Event..legacy..see.tags. == purpose)
+  } else {
+      filtered_protests <- subset(protests, Event..legacy..see.tags. == purpose & Tags == position_taken)
+  }
+    
+    return(filtered_protests)
+  
+}
+
+test1 <- filter_protests("Environment")
+View(test1)
+
+test2 <- filter_protests("Civil Rights", "Civil Rights; For women's rights")
+View(test2)
+
+test3 <- filter_protests("Racial Injustice", NULL)
+View(test3)
+
+# 
+# FUNCTION #2: filter_and_report() 
+# filter_and_report() takes two arguments: 
+#     purpose             A string for the purpose of the protest (e.g., "Environment")
+#     position_taken      A string for the position taken (e.g., "Against noise")
+#                         The default value should be NULL 
+#                           
+# This function should do two things:(1) It should call `filter_positions()`,
+# to create a sub-set of protests, stored in a dataframe; and (2) It should 
+# call `format_doc()`, to create the report.
+
 # 6b: Write the filter_and_report() function, as described above. Please comment 
 #    your function. (Variable: `filter_and_report`)
+
+filter_and_report <- function(purpose, position_taken=NULL) {
+  
+  protest_df <- filter_protests(purpose, position_taken)
+  
+  report <- format_doc(protest_df, purpose, position_taken)
+  
+  return(report)
+  
+}
+
+test4 <- filter_and_report("Civil Rights", "Civil Rights; For women's rights")
+write_report(test4, "/Users/meha/Desktop/INFO/info201/code/assignment-02-mehasingal/Filter_and_Report_Testing.Rmd")
+
+
 
 #                                         Note 18.
 # 6c: Demonstrate that your two functions, filter_protests() and 
@@ -479,3 +659,5 @@ write_report <- function(md_doc, fname="~/Documents/info201/reports/report.md") 
 #    For example, do your functions have limitations? Or, do they 
 #    work perfectly? If so, how do you know> Do think these two 
 #    functions are useful? What might you do next if you had more time?
+
+
