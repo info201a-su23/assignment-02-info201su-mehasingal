@@ -681,5 +681,3 @@ View(test3)
 
 test4 <- filter_and_report("Civil Rights", "Civil Rights; For women's rights")
 write_report(test4, "/Users/meha/Desktop/INFO/info201/code/assignment-02-mehasingal/Filter_and_Report_Testing.Rmd")
-
-
