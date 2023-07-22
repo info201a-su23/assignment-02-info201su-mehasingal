@@ -603,6 +603,11 @@ write_report <- function(md_doc, fname="/Users/meha/Desktop/INFO/info201/code/as
 # 6a: Write the filter_positions() function, as described above. Please comment 
 #    your function. (Variable: `filter_protests`)
 
+
+# This is my filter_protest function that takes in two arguments, 
+# purpose of protest, and position taken that has a default of NULL
+# It returns a new dataframe of the filtered data that matches the 
+# selected protest types
 filter_protests <- function(purpose, position_taken=NULL) {
   
   if (is.null(position_taken)) {
@@ -614,15 +619,6 @@ filter_protests <- function(purpose, position_taken=NULL) {
     return(filtered_protests)
   
 }
-
-test1 <- filter_protests("Environment")
-View(test1)
-
-test2 <- filter_protests("Civil Rights", "Civil Rights; For women's rights")
-View(test2)
-
-test3 <- filter_protests("Racial Injustice", NULL)
-View(test3)
 
 # 
 # FUNCTION #2: filter_and_report() 
@@ -638,6 +634,13 @@ View(test3)
 # 6b: Write the filter_and_report() function, as described above. Please comment 
 #    your function. (Variable: `filter_and_report`)
 
+
+# This is my filter_and_report function, it takes two arguments, 
+# the purpose of the protest, and the position taken which its default
+# is set to NULL. This method include two method calls to previously 
+# written functions and returns all of the components to a markdown
+# summary of the type of protest being searched and is ready for viewing
+
 filter_and_report <- function(purpose, position_taken=NULL) {
   
   protest_df <- filter_protests(purpose, position_taken)
@@ -648,9 +651,6 @@ filter_and_report <- function(purpose, position_taken=NULL) {
   
 }
 
-test4 <- filter_and_report("Civil Rights", "Civil Rights; For women's rights")
-write_report(test4, "/Users/meha/Desktop/INFO/info201/code/assignment-02-mehasingal/Filter_and_Report_Testing.Rmd")
-
 
 
 #                                         Note 18.
@@ -659,5 +659,27 @@ write_report(test4, "/Users/meha/Desktop/INFO/info201/code/assignment-02-mehasin
 #    For example, do your functions have limitations? Or, do they 
 #    work perfectly? If so, how do you know> Do think these two 
 #    functions are useful? What might you do next if you had more time?
+
+# These are my tests for filter_protests(), they have a few limitations
+# but overall are solid tests to display the output of the function
+# and have range of calls with and without positions
+test1 <- filter_protests("Environment")
+View(test1)
+
+test2 <- filter_protests("Civil Rights", "Civil Rights; For women's rights")
+View(test2)
+
+test3 <- filter_protests("Racial Injustice", NULL)
+View(test3)
+
+# This is my test for filter_and_report, I created a blank R Markdown
+# file so the write_output could run properly and print the summary to a
+# markdown file that was already in my directory so I could view it easily
+# I chose a test that was the same as the test for the filter_protests() function
+# so I could make sure the summary numbers, such as number of protests matched
+# and the calls in this method were executed correctly
+
+test4 <- filter_and_report("Civil Rights", "Civil Rights; For women's rights")
+write_report(test4, "/Users/meha/Desktop/INFO/info201/code/assignment-02-mehasingal/Filter_and_Report_Testing.Rmd")
 
 
